@@ -1,0 +1,95 @@
+#include "Toy.h"
+using namespace std;
+
+class ToyFactory{
+  public:
+    static Toy* CreateToy(int type){
+        Toy *T = nullptr;
+        switch(type){
+            case 1:
+            {
+                T = new Car();
+                break;
+            }
+            case 2:
+            {
+                T = new Bike();
+                break;
+            }
+            case 3:
+            {
+                T = new Plane();
+                break;
+            }
+            default:
+            {
+                cout << "Invalid Type " << endl;
+                T = nullptr;
+            }
+            
+        }
+        return T;
+    }
+};
+
+
+
+
+
+
+using namespace std;
+
+class Toy{
+    protected:
+        string m_Toy_Name;
+        float m_Toy_Price;
+    public:
+        virtual void PrepareParts() = 0;
+        virtual void AssambleParts() = 0;
+        virtual void GetToyInfo() = 0;
+        
+        virtual ~Toy() {}
+};
+
+class Car: public Toy{
+    public:
+    Car(){
+        m_Toy_Name = "Remote Car";
+        m_Toy_Price = 120.0f;
+    }
+    public:
+        void PrepareParts(){cout << "Preparing Car Parts" << endl;}
+        void AssambleParts(){cout << "Assambling Car Parts" << endl;}
+        void GetToyInfo(){cout << "Toy Name - [" << m_Toy_Name << "] Toy Price - [" << m_Toy_Price << "]"<<endl;}
+        
+    ~Car(){ cout << "Toy [Car] delivered." << endl;}
+};
+
+class Bike: public Toy{
+    public:
+    Bike(){
+        m_Toy_Name = "Bike";
+        m_Toy_Price = 100.0f;
+    }
+    public:
+        void PrepareParts(){cout << "Preparing Bike Parts" << endl;}
+        void AssambleParts(){cout << "Assambling Bike Parts" << endl;}
+        void GetToyInfo(){cout << "Toy Name - [" << m_Toy_Name << "] Toy Price - [" << m_Toy_Price <<"]" << endl;}
+        
+        ~Bike(){ cout << "Toy [Bike] delivered." << endl;}
+};
+
+class Plane: public Toy{
+    public:
+    Plane(){
+        m_Toy_Name = "RC Plane";
+        m_Toy_Price = 200.0f;
+    }
+    public:
+        void PrepareParts(){cout << "Preparing Plane Parts" << endl;}
+        void AssambleParts(){cout << "Assambling Plane Parts" << endl;}
+        void GetToyInfo(){cout << "Toy Name - [" << m_Toy_Name << "] Toy Price - [" << m_Toy_Price << "]"<<endl;}
+        
+        
+        ~Plane(){ cout << "Toy [Plane] delivered." << endl;}
+};
