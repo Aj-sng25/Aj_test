@@ -1,0 +1,119 @@
+using namespace std;
+#include "car.h"
+
+class CarFactory{
+    //Car* car;
+    public:
+        virtual Tire* buildTire() = 0;
+        virtual Body* buildBody() = 0;
+        virtual Car* buildWholeCar() = 0;
+        
+};
+
+class SimpleCar : public CarFactory{
+    public:
+        Tire* buildTire(){
+            return new SimpleTire();
+        };
+        Body* buildBody(){
+            return new SimpleBody();
+        }
+        
+        Car* buildWholeCar(){
+            Car* carT = new Car("SimpleCar");
+            carT->setTire(buildTire());
+            carT->setBody(buildBody());
+            
+            return carT;
+        }
+};
+
+class LuxuryCar : public CarFactory{
+    public:
+        Tire* buildTire(){
+            return new LuxuryTire();
+        };
+        Body* buildBody(){
+            return new LuxuryBody();
+        }
+        
+        Car* buildWholeCar(){
+            Car* carT = new Car("LuxuryCar");
+            carT->setTire(buildTire());
+            carT->setBody(buildBody());
+            
+            return carT;
+        }
+};
+
+
+
+
+
+
+
+
+
+
+using namespace std;
+
+class Tire{
+    protected:
+        string m_TireName;
+        float m_TirePressure;
+        
+    public:
+       Tire(string str, float prs):m_TireName(str), m_TirePressure(prs){}
+       string getTireName(){ return m_TireName;}
+       float getTirePressure(){ return m_TirePressure;}
+};
+
+class SimpleTire : public Tire{
+    public:
+        SimpleTire() : Tire("Simple Tire", 75.0f){}
+};
+
+class LuxuryTire : public Tire{
+    public:
+        LuxuryTire() : Tire("Luxury Tire", 100.0f){}
+};
+
+
+class Body{
+    protected:
+        string m_BodyName;
+        float m_BodyStrength;
+        
+    public:
+       Body(string str, float stg):m_BodyName(str), m_BodyStrength(stg){}
+       string getBodyName(){ return m_BodyName;}
+       float getBodyStrength(){ return m_BodyStrength;}
+};
+
+class SimpleBody : public Body{
+    public:
+        SimpleBody() : Body("Simple Body", 75.0f){}
+};
+
+class LuxuryBody : public Body{
+    public:
+        LuxuryBody() : Body("Luxury Body", 90.99f){}
+};
+
+
+
+class Car{
+    protected:
+        string m_name;
+        Tire* m_tire;
+        Body* m_body;
+    public:
+        Car(string n):m_name(n){}
+        void setTire(Tire* t){m_tire = t;}
+        void setBody(Body* b){m_body = b;}
+        
+        void CarDetails(){
+            cout << "Tire name : " << m_tire->getTireName() << " | Tire pressure : " << m_tire->getTirePressure() << endl;
+            cout << "Body name : " << m_body->getBodyName() << " | Tire strength : " << m_body->getBodyStrength() << endl;
+        }
+};
